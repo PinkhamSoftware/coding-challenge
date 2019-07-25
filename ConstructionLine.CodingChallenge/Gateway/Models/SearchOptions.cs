@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ConstructionLine.CodingChallenge.Domain;
 
-namespace ConstructionLine.CodingChallenge.UseCase.Models
+namespace ConstructionLine.CodingChallenge.Gateway.Models
 {
     public class SearchOptions
     {

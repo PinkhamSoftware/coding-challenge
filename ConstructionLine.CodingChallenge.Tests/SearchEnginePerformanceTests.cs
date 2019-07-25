@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using ConstructionLine.CodingChallenge.Domain;
+using ConstructionLine.CodingChallenge.Gateway;
+using ConstructionLine.CodingChallenge.Gateway.Models;
 using ConstructionLine.CodingChallenge.Tests.SampleData;
-using ConstructionLine.CodingChallenge.UseCase;
-using ConstructionLine.CodingChallenge.UseCase.Models;
 using NUnit.Framework;
 
 namespace ConstructionLine.CodingChallenge.Tests

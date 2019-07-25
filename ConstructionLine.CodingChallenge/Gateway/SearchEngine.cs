@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ConstructionLine.CodingChallenge.Domain;
-using ConstructionLine.CodingChallenge.UseCase.Models;
+using ConstructionLine.CodingChallenge.Gateway.Models;
 
-namespace ConstructionLine.CodingChallenge.UseCase
+namespace ConstructionLine.CodingChallenge.Gateway
 {
     public class SearchEngine:ISearchEngine
     {

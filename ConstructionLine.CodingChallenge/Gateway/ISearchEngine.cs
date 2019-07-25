@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using ConstructionLine.CodingChallenge.UseCase.Models;
+using ConstructionLine.CodingChallenge.Gateway.Models;
 
-namespace ConstructionLine.CodingChallenge.UseCase
+namespace ConstructionLine.CodingChallenge.Gateway
 {
     public interface ISearchEngine
     {

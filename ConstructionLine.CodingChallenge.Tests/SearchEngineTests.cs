@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ConstructionLine.CodingChallenge.Domain;
-using ConstructionLine.CodingChallenge.UseCase;
-using ConstructionLine.CodingChallenge.UseCase.Models;
+using ConstructionLine.CodingChallenge.Gateway;
+using ConstructionLine.CodingChallenge.Gateway.Models;
 using NUnit.Framework;
 
 namespace ConstructionLine.CodingChallenge.Tests
