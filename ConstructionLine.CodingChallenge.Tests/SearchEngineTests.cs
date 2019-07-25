@@ -272,5 +272,30 @@ namespace ConstructionLine.CodingChallenge.Tests
             AssertColorCounts(shirts, searchOptions, results.ColorCounts);
             AssertSizeCounts(shirts, searchOptions, results.SizeCounts);
         }
+
+        [Test]
+        public async Task returns_all_results_if_no_search_options_are_specified()
+        {
+            var shirts = new List<Shirt>
+            {
+                new Shirt(Guid.NewGuid(), "Red - Small", Size.Small, Color.Red),
+                new Shirt(Guid.NewGuid(), "Red - Medium", Size.Medium, Color.Red),
+                new Shirt(Guid.NewGuid(), "Black - Medium", Size.Medium, Color.Black),
+                new Shirt(Guid.NewGuid(), "Blue - Large", Size.Large, Color.Blue),
+            };
+
+            var searchEngine = new SearchEngine(shirts);
+
+            var searchOptions = new SearchOptions
+            {
+
+            };
+
+            var results = await searchEngine.SearchAsync(searchOptions, CancellationToken.None).ConfigureAwait(false);
+
+            AssertResults(results.Shirts, searchOptions);
+            AssertColorCounts(shirts, searchOptions, results.ColorCounts);
+            AssertSizeCounts(shirts, searchOptions, results.SizeCounts);
+        }
     }
 }
