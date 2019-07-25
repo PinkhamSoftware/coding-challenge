@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using ConstructionLine.CodingChallenge.Domain;
 using ConstructionLine.CodingChallenge.Tests.SampleData;
+using ConstructionLine.CodingChallenge.UseCase;
+using ConstructionLine.CodingChallenge.UseCase.Models;
 using NUnit.Framework;
 
 namespace ConstructionLine.CodingChallenge.Tests
@@ -10,7 +15,7 @@ namespace ConstructionLine.CodingChallenge.Tests
     public class SearchEnginePerformanceTests : SearchEngineTestsBase
     {
         private List<Shirt> _shirts;
-        private SearchEngine _searchEngine;
+        private ISearchEngine _searchEngine;
 
         [SetUp]
         public void Setup()
@@ -25,7 +30,7 @@ namespace ConstructionLine.CodingChallenge.Tests
 
 
         [Test]
-        public void PerformanceTest()
+        public async Task PerformanceTest()
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -35,7 +40,7 @@ namespace ConstructionLine.CodingChallenge.Tests
                 Colors = new List<Color> { Color.Red }
             };
 
-            var results = _searchEngine.Search(options);
+            var results = await  _searchEngine.SearchAsync(options, CancellationToken.None).ConfigureAwait(false);
 
             sw.Stop();
             Console.WriteLine($"Test fixture finished in {sw.ElapsedMilliseconds} milliseconds");

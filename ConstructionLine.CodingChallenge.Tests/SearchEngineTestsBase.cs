@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using ConstructionLine.CodingChallenge.Domain;
+using ConstructionLine.CodingChallenge.UseCase.Models;
 using NUnit.Framework;
 
 namespace ConstructionLine.CodingChallenge.Tests
@@ -32,17 +35,31 @@ namespace ConstructionLine.CodingChallenge.Tests
         {
             Assert.That(sizeCounts, Is.Not.Null);
 
-            foreach (var size in Size.All)
+            foreach (var size in searchOptions.Sizes)
             {
                 var sizeCount = sizeCounts.SingleOrDefault(s => s.Size.Id == size.Id);
-                Assert.That(sizeCount, Is.Not.Null, $"Size count for '{size.Name}' not found in results");
 
-                var expectedSizeCount = shirts
-                    .Count(s => s.Size.Id == size.Id
-                                && (!searchOptions.Colors.Any() || searchOptions.Colors.Select(c => c.Id).Contains(s.Color.Id)));
+                IQueryable<Shirt> sizeQueryable = shirts.Where(w => w.Size == size).AsQueryable();
+                if (searchOptions.Colors.Any())
+                    sizeQueryable = sizeQueryable.Where(w => searchOptions.Colors.Contains(w.Color));
 
-                Assert.That(sizeCount.Count, Is.EqualTo(expectedSizeCount), 
-                    $"Size count for '{sizeCount.Size.Name}' showing '{sizeCount.Count}' should be '{expectedSizeCount}'");
+                if (sizeQueryable.Any())
+                {
+
+                    Assert.That(sizeCount, Is.Not.Null, $"Size count for '{size.Name}' not found in results");
+
+                    var expectedSizeCount = shirts
+                        .Count(s => s.Size.Id == size.Id
+                                    && (!searchOptions.Colors.Any() ||
+                                        searchOptions.Colors.Select(c => c.Id).Contains(s.Color.Id)));
+
+                    Assert.That(sizeCount.Count, Is.EqualTo(expectedSizeCount),
+                        $"Size count for '{sizeCount.Size.Name}' showing '{sizeCount.Count}' should be '{expectedSizeCount}'");
+                }
+                else
+                {
+                    Assert.That(sizeCount, Is.Null, $"Size count for '{size.Name}' found in results");
+                }
             }
         }
 
@@ -51,17 +68,28 @@ namespace ConstructionLine.CodingChallenge.Tests
         {
             Assert.That(colorCounts, Is.Not.Null);
             
-            foreach (var color in Color.All)
+            foreach (var color in searchOptions.Colors)
             {
                 var colorCount = colorCounts.SingleOrDefault(s => s.Color.Id == color.Id);
-                Assert.That(colorCount, Is.Not.Null, $"Color count for '{color.Name}' not found in results");
 
-                var expectedColorCount = shirts
-                    .Count(c => c.Color.Id == color.Id  
-                                && (!searchOptions.Sizes.Any() || searchOptions.Sizes.Select(s => s.Id).Contains(c.Size.Id)));
+                IQueryable<Shirt> colourQueryable = shirts.Where(w => w.Color == color).AsQueryable();
+                if (searchOptions.Sizes.Any())
+                    colourQueryable = colourQueryable.Where(w => searchOptions.Sizes.Contains(w.Size));
 
-                Assert.That(colorCount.Count, Is.EqualTo(expectedColorCount),
-                    $"Color count for '{colorCount.Color.Name}' showing '{colorCount.Count}' should be '{expectedColorCount}'");
+                if (colourQueryable.Any())
+                {
+                    Assert.That(colorCount, Is.Not.Null, $"Color count for '{color.Name}' not found in results");
+                    var expectedColorCount = shirts
+                        .Count(shirt => shirt.Color.Id == color.Id
+                                        && (!searchOptions.Sizes.Any() || searchOptions.Sizes.Select(s => s.Id).Contains(shirt.Size.Id)));
+
+                    Assert.That(colorCount.Count, Is.EqualTo(expectedColorCount),
+                        $"Color count for '{colorCount.Color.Name}' showing '{colorCount.Count}' should be '{expectedColorCount}'");
+                }
+                else
+                {
+                    Assert.That(colorCount, Is.Null, $"Color count for '{color.Name}' found in results");
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConstructionLine.CodingChallenge.Domain;
 
 namespace ConstructionLine.CodingChallenge.Tests.SampleData
 {
