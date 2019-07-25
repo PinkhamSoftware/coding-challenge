@@ -1,4 +1,13 @@
-# Construction Line code challenge
+# Implementation of Construction Line code challenge
+- I've made the search engine be able to handle what I think are all edge cases.
+- Test drove out the implementation.
+- Challenge didn't specify that it shouldn't be in memory, so I did in memory implementation.
+- Modified the Assertions because they didn't appear to cater for edge cases whereby a search option could be specified but not return results.
+- Made Search Engine interface asynchronous in anticipation of swapping it out for an implementation with a persistent data store.
+- Change project structure around to more closely resemble Clean Architecture -> Gateways, Domain etc.
+- Performance test returns in 45 - 50 milliseconds
+
+## Construction Line code challenge
 
 The code challenge consists in the implementation of a simple search engine for shirts.
 
@@ -31,3 +40,4 @@ There are two tests in the test project; one simple search for red shirts out of
 We would like you to send us a link to a git repository that we can access with your implementation.
 
 The whole exercise should not take more than an hour to implement.
+
